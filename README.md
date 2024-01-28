@@ -18,3 +18,9 @@ Details at: [Dynamic Linking](./dynamic-linking/README.md)
 An example of dynamically calling a function in either of two libraries by using a CLI argument, using makefiles and g++.
 
 Details at [Runtime Dynamic Linking](./run-time-dynamic-linking/README.md)
+
+## WASM Compilation with Overlapping Symbols (Emscripten, C++, Node)
+
+An example of compiling C++ files into wasm when they share a common function name (albeit namespaced), using makefiles, emscripten, g++, and node (to run the compiled output).
+
+Details at: [Overlapping Symbols WASM](./overlapping-symbols-wasm/README.md)
