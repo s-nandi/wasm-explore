@@ -13,6 +13,8 @@ See this github [thread](https://github.com/WebAssembly/wasi-sdk/issues/332#issu
 
 This incompatibility is why we build a `.js` file instead, and run it via node -- emscripten handles the dynamic loading functionality in javascript land.
 
+Extern "C" linkage wouldn't solve the issue in general because that prevents us from passing C++ only types (ex. vector, heap allocating classes in general) across modules. Not sure if this helps if we only pass basic types back and forth.
+
 # Timing comparisons (one shot build vs static link vs dynamic link)
 
 To prove that this speeds up the final build (assuming the individual `a.wasm` and `b.wasm` dynamic libraries are pre-built), compare the following:

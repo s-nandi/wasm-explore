@@ -42,3 +42,9 @@ Details at [Linking WASM](./linking-wasm/README.md)
 Test dynamic linking with a 1) user provided source file 2) predetermined entrypoint 3/4) multiple libraries with complex (ie. heap stored) variables.
 
 Details at [Rainbow](./rainbow/README.md)
+
+## Rainbow WASM (Emscriptem)
+
+Test dynamic linking with a 1) user provided source file 2) predetermined entrypoint 3/4) multiple libraries with complex (ie. heap stored) variables via emscripten.
+
+Details at [Rainbow](./rainbow/README.md)
