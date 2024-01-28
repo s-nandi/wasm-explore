@@ -47,4 +47,8 @@ Details at [Rainbow](./rainbow/README.md)
 
 Test dynamic linking with a 1) user provided source file 2) predetermined entrypoint 3/4) multiple libraries with complex (ie. heap stored) variables via emscripten.
 
-Details at [Rainbow](./rainbow/README.md)
+Details at [Rainbow WASM](./rainbow-wasm/README.md)
+
+## Opaque Rainbow
+
+Details at [Opaque Rainbow](./opaque-rainbow/README.md)
