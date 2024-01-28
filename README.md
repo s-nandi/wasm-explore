@@ -36,3 +36,9 @@ Details at [Emscripten into Wasmer](./emscripten-into-wasmer/README.md)
 An example of dynamically linking (and statically linking) pre-built wasm modules together, along with timing results comparing one-shot builds (compile and link in one step), static linking, and dynamic linking. Notably, Wasmer cannot consume the dynamic library output from Emscripten, but the `.js` output from Emscripten can be run by node.
 
 Details at [Linking WASM](./linking-wasm/README.md)
+
+## Rainbow
+
+Test dynamic linking with a 1) user provided source file 2) predetermined entrypoint 3/4) multiple libraries with complex (ie. heap stored) variables.
+
+Details at [Rainbow](./rainbow/README.md)
