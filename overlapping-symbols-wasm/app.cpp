@@ -5,6 +5,6 @@
 
 int main() {
     std::cout << "Main" << '\n';
-    foo();
-    bar();
+    projecta::foo();
+    projectb::foo();
 }

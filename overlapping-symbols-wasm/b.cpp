@@ -2,6 +2,10 @@
 
 #include <iostream>
 
-void bar() {
-    std::cout << "bar" << '\n';
+namespace projectb {
+
+void foo() {
+    std::cout << "(foo) project b" << '\n';
 }
+
+}  // namespace projectb

@@ -2,6 +2,10 @@
 
 #include <iostream>
 
+namespace projecta {
+
 void foo() {
-    std::cout << "foo" << '\n';
+    std::cout << "(foo) project a" << '\n';
 }
+
+}  // namespace projecta

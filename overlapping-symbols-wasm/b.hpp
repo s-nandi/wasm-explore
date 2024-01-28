@@ -1,3 +1,7 @@
 #pragma once
 
-void bar();
+namespace projectb {
+
+void foo();
+
+}
