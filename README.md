@@ -1,2 +1,8 @@
 # wasm-explore
 Toy project for exploring WASM / WASI
+
+## Static linking (C++)
+
+An example of static linking two libraries with an application's source code using makefiles and g++.
+
+Details at: [Static Linking](./static-linking/README.md)
