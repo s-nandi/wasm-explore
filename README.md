@@ -24,3 +24,9 @@ Details at [Runtime Dynamic Linking](./run-time-dynamic-linking/README.md)
 An example of compiling C++ files into wasm when they share a common function name (albeit namespaced), using makefiles, emscripten, g++, and node (to run the compiled output).
 
 Details at: [Overlapping Symbols WASM](./overlapping-symbols-wasm/README.md)
+
+## Emscripten into Wasmer (Emscriptem, C++, Wasmer)
+
+An example of compiling C++ files into a standalone .wasm via Emscripten and then running that via wasmer
+
+Details at [Emscripten into Wasmer](./emscripten-into-wasmer/README.md)
