@@ -30,3 +30,9 @@ Details at: [Overlapping Symbols WASM](./overlapping-symbols-wasm/README.md)
 An example of compiling C++ files into a standalone .wasm via Emscripten and then running that via wasmer
 
 Details at [Emscripten into Wasmer](./emscripten-into-wasmer/README.md)
+
+## Linking WASM (Emscripten, C++, Wasmer)
+
+An example of dynamically linking (and statically linking) pre-built wasm modules together, along with timing results comparing one-shot builds (compile and link in one step), static linking, and dynamic linking. Notably, Wasmer cannot consume the dynamic library output from Emscripten, but the `.js` output from Emscripten can be run by node.
+
+Details at [Linking WASM](./linking-wasm/README.md)
