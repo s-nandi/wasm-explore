@@ -51,4 +51,6 @@ Details at [Rainbow WASM](./rainbow-wasm/README.md)
 
 ## Opaque Rainbow
 
+Test linking multiple languages in one combined wasm (component or module)
+
 Details at [Opaque Rainbow](./opaque-rainbow/README.md)
