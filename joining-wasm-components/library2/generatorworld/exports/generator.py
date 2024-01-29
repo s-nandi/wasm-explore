@@ -7,3 +7,10 @@ import weakref
 from ..types import Result, Ok, Err, Some
 
 
+class Path(Protocol):
+    
+    @abstractmethod
+    def name(self) -> str:
+        raise NotImplementedError
+
+

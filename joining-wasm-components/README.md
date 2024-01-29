@@ -9,8 +9,22 @@ Inspired by the example of writing a custom library-style component and consumin
 ### Python
 Run:
 ```
-make library2_bindings
+make bindings
 ```
+
+To clean up the bindings, run:
+```
+make clean_bindings
+```
+
+Note how the python source files are split between `library2/src` and `library2/generator` -- this is because of what componentize-py expects/requires the folder structure to be. Without the separate `library2/generator` folder, we just get an opaque error:
+```
+AssertionError: 
+
+Caused by:
+    ModuleNotFoundError: No module named 'generator'
+```
+I don't think this is documented anywhere. It also seems necessary to cd into `library2` when running `componentize-py`.
 
 ### Rust
 Run:

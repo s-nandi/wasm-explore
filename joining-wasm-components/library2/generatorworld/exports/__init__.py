@@ -5,7 +5,7 @@ from abc import abstractmethod
 import weakref
 
 from ..types import Result, Ok, Err, Some
-
+from ..exports import generator
 
 class Generator(Protocol):
 
@@ -15,6 +15,10 @@ class Generator(Protocol):
 
     @abstractmethod
     def generate_many(self) -> List[int]:
+        raise NotImplementedError
+
+    @abstractmethod
+    def generate_paths(self) -> List[generator.Path]:
         raise NotImplementedError
 
 

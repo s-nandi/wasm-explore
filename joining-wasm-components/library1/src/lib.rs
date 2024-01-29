@@ -7,7 +7,7 @@ struct Component;
 impl Guest for Component {
     /// Say hello!
     fn hello_world() -> Greeting {
-        let text = "Hello, World!".to_string();
+        let text = "Hello, World from library1/lib.rs!".to_string();
         let times = vec![3, 4, 5];
         Greeting { text, times }
     }

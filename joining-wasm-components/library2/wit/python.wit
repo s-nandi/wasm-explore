@@ -1,8 +1,13 @@
 package component:library2;
 
 interface generator {
+    resource path {
+        name: func() -> string;
+    }
+
     generate: func() -> s32;
     generate-many: func() -> list<s32>;
+    generate-paths: func() -> list<path>;
 }
 
 world generatorworld {
