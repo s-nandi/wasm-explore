@@ -33,7 +33,7 @@ To serve the server handler built by `bycargoserver`, run:
 ```
 wasmtime serve bin/bycargoserver.wasm
 ```
-If you access `localhost:8080/good` you should see a 200-level response code in the browser dev tools `Network` tab
+If you access `localhost:8080/good` (or almost any other path) you should see a 200-level response code in the browser dev tools `Network` tab
 Meanwhile if you access `localhost:8080/bad` , you should get a 500-level response code.
 
 ## Setting up local WASI package dependencies (needed if spinning up a new repo, already checked into this one):
