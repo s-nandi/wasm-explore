@@ -1,6 +1,6 @@
 mod bindings;
 
-use bindings::Guest;
+use crate::bindings::exports::component::library1::greeter::Guest;
 
 struct Component;
 

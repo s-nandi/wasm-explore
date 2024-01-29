@@ -11,6 +11,35 @@ Run:
 cargo component new library1 --lib
 cargo component new app --command
 ```
+to make each component
+
+Then make a `app/wit/world.wit` file with the following contents:
+```
+package component:app;
+
+world example {
+    import component:library1/greeter;
+}
+```
+
+And change the contents of `library1/wit/world.wit` to: # TODO
+```
+package component:library1;
+
+interface greeter {
+    hello-world: func() -> string;
+}
+
+/// An example world for the component to target.
+world example {
+    export greeter;
+}
+```
+
+Then link the dependence on `library1` while in `app` by running:
+```
+cargo component add --path ../library1/wit --target component:library1
+```
 
 ## Running
 
@@ -34,11 +63,4 @@ wasm-tools component wit bin/app.wasm
 you'll see something that's almost an exact match for [wasi:cli/command](https://github.com/WebAssembly/wasi-cli/blob/main/wit/command.wit)
 but with an additional `import hello-world: funct() -> string` -- this comes from the `app/wit/world.wit`, which `cargo component` automatically picks up on
 
-For reference, these are the contents of `app/wit/world.wit`:
-```
-package component:app;
-
-world example {
-    import hello-world: func() -> string;
-}
-```
+For reference, the components of `app/wit/world.wit` are described in the Pre-Setup section

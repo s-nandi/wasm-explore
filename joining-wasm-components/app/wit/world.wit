@@ -1,5 +1,5 @@
 package component:app;
 
 world example {
-    import hello-world: func() -> string;
+    import component:library1/greeter;
 }
