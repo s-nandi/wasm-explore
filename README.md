@@ -49,8 +49,14 @@ Test dynamic linking with a 1) user provided source file 2) predetermined entryp
 
 Details at [Rainbow WASM](./rainbow-wasm/README.md)
 
-## Opaque Rainbow
+## Opaque Rainbow (Wasmtime, C++, Emscripten, Rust, Cargo Component)
 
 Test linking multiple languages in one combined wasm (component or module)
 
 Details at [Opaque Rainbow](./opaque-rainbow/README.md)
+
+## Wasm Components (Wasmtime, Rust)
+
+Test different ways of adapting plain wasm modules into components
+
+Details at [WASM Components](./wasm-components/README.md)
