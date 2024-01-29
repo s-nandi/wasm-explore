@@ -56,7 +56,7 @@ cargo component add --target --path wit/deps/sockets wasi:sockets
 ```
 1. Add `path = "wit/world.wit"` to the `[package.metadata.component.target]` section of `Cargo.toml`
 
-## Adaptors Source
+## Adaptors Source (needed if spinning up a new repo, already checked into this one)
 The adaptors in the `adaptors` folder come from here: https://github.com/bytecodealliance/wasmtime/releases/tag/dev
 as described in: https://github.com/bytecodealliance/wasmtime/tree/main/crates/wasi-preview1-component-adapter
 The `wasi_snapshot_preview1.wasm` referred to in the `Using` section refers to a reactor adaptor
