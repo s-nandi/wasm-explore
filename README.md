@@ -55,8 +55,14 @@ Test linking multiple languages in one combined wasm (component or module)
 
 Details at [Opaque Rainbow](./opaque-rainbow/README.md)
 
-## Wasm Components (Wasmtime, Rust)
+## Wasm Components (Wasmtime, Rust, Cargo Component)
 
 Test different ways of adapting plain wasm modules into components
 
 Details at [WASM Components](./wasm-components/README.md)
+
+## Joining Wasm Components (Wasmtime, Rust, Cargo Component)
+
+Test different ways of joining wasm components
+
+Details at [Joining WASM Components](./joining-wasm-components/README.md)
