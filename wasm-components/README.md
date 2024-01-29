@@ -19,14 +19,10 @@ Run:
 # even though it can deal with the module `wasmer bin/command.wasm`, so clearly
 # it is getting adapted into a component
 wasmtime bin/command-component.wasm
+wasmtime bin/bycargocommand.wasm
 ```
 
-Note: The reactor-component cannot be run via `wasmtime bin/reactor-component.wasm` since it expects a `run` to be exported.
-
-Merge components:
-```
-
-```
+Note: The reactor-component cannot be run via `wasmtime bin/reactor-component.wasm` since it expects a `run` to be exported, similarly, `wasmtime bin/bycargoreactor.wasm` does not work either
 
 ## Adaptors Source
 The adaptors in the `adaptors` folder come from here: https://github.com/bytecodealliance/wasmtime/releases/tag/dev
