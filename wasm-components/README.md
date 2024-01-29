@@ -1,21 +1,47 @@
 # Wasm Components
 
-(basically [https://github.com/wasmtime/.../wasi-preview1-component-adapter](https://github.com/bytecodealliance/wasmtime/tree/main/crates/wasi-preview1-component-adapter#using) along with an understanding of reactor implementation based on this wasmcloud [blog post](https://wasmcloud.com/blog/webassembly-patterns-command-reactor-library)) on webassembly patterns.
+Basically [https://github.com/wasmtime/.../wasi-preview1-component-adapter](https://github.com/bytecodealliance/wasmtime/tree/main/crates/wasi-preview1-component-adapter#using)
+along with an understanding of reactor implementation based on this wasmcloud [blog post](https://wasmcloud.com/blog/webassembly-patterns-command-reactor-library) on webassembly patterns.
 
 Cd here via: `cd wasm-components`
 
-Generate wasm modules/components and check component dependencies:
+Generate wasm modules/components:
 ```
-make
+make # This generates the base .wasm files for `component` and `reactor`, and then component-ifies them using component adapters (see the `Adaptors Source` section below for details)
+     # This also uses cargo component to set up `bycargocomponent`, `bycargoreactor`, and `bycargoserver`
+```
+
+## Checking component dependencies
+
+After running `make`, run:
+```
 wasm-tools component wit bin/command-component.wasm  # you should see wasi:cli/run exported
 wasm-tools component wit bin/reactor-component.wasm # nothing exported, reactors are leaf nodes
 wasm-tools component wit bin/bycargoserver.wasm # you should see wasi:http/types imported and wasi:http/incoming-handler exported, just like wasi:http/proxy
 ```
 
-## Running wasi:cli/command components
+## Validating components:
+First run `make`, then run:
+```
+for wasm in bin/*.wasm;
+    do  wasm-tools validate $wasm --features component-model;
+done
+```
+
+Note: if you want to convince yourself that does anything (there's no output), remove the `--features component-model` flag, and you should start seeing errors for the componentified (and cargo component) wasms.
+
+## Merging components:
+
+
+
+## Running wasi:cli/command components and modules
 
 Run:
 ```
+# modules:
+wasmtime bin/command.wasm
+
+# components:
 # apparently the `--wasm component-model` flag is optional now?
 # wasmtime seems to autodetect this is a component fine
 # meanwhile wasmer throws a validation error on `wasmer bin/command-component.wasm`
@@ -25,7 +51,7 @@ wasmtime bin/command-component.wasm
 wasmtime bin/bycargocommand.wasm 
 ```
 
-Note: The reactor-component cannot be run via `wasmtime bin/reactor-component.wasm` since it expects a `run` to be exported, similarly, `wasmtime bin/bycargoreactor.wasm` does not work either
+Note: The reactor components/modules cannot be run via `wasmtime bin/reactor-component.wasm` or `wasmtime bin/reactor.wasm` since `wasmtime run` (which `wasmtime` is an alias for) expects a `run` to be exported, similarly, `wasmtime bin/bycargoreactor.wasm` does not work either
 
 ## Serving wasi:http/server components
 
