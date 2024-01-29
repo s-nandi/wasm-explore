@@ -20,3 +20,25 @@ Then run:
 ```
 make
 ```
+
+If you inspect the library1 component:
+```
+wasm-tools component wit bin/library1.wasm
+```
+you should see `hello-world: funct() -> string` being the only export
+
+meanwhile if you inspect app:
+```
+wasm-tools component wit bin/app.wasm
+```
+you'll see something that's almost an exact match for [wasi:cli/command](https://github.com/WebAssembly/wasi-cli/blob/main/wit/command.wit)
+but with an additional `import hello-world: funct() -> string` -- this comes from the `app/wit/world.wit`, which `cargo component` automatically picks up on
+
+For reference, these are the contents of `app/wit/world.wit`:
+```
+package component:app;
+
+world example {
+    import hello-world: func() -> string;
+}
+```
