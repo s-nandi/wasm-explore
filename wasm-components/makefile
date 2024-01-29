@@ -20,9 +20,9 @@ bin/bycargocommand.wasm: bycargocommand/src/*.rs
 	cargo component build --manifest-path="bycargocommand/Cargo.toml"
 	cp -f bycargocommand/target/wasm32-wasi/debug/bycargocommand.wasm $@
 
-bin/bycargoserver.wasm: bycargoserver/src/*.rs
-	cargo component build --manifest-path="bycargoserver/Cargo.toml"
-	cp -f bycargoserver/target/wasm32-wasi/debug/bycargoserver.wasm $@
+bin/bycargoserver.wasm: bycargoserver/src/*.rs bycargoserver/*
+	cargo component build --target wasm32-unknown-unknown --manifest-path="bycargoserver/Cargo.toml"
+	cp -f bycargoserver/target/wasm32-unknown-unknown/debug/bycargoserver.wasm $@
 
 clean:
 	rm -f bin/*

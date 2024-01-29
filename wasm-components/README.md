@@ -9,7 +9,7 @@ Generate wasm modules/components and check component dependencies:
 make
 wasm-tools component wit bin/command-component.wasm  # you should see wasi:cli/run exported
 wasm-tools component wit bin/reactor-component.wasm # nothing exported, reactors are leaf nodes
-wasm-tools component wit bin/bycargoserver.wasm
+wasm-tools component wit bin/bycargoserver.wasm # you should see wasi:http/types imported and wasi:http/incoming-handler exported, just like wasi:http/proxy
 ```
 
 Run:
@@ -20,8 +20,15 @@ Run:
 # even though it can deal with the module `wasmer bin/command.wasm`, so clearly
 # it is getting adapted into a component
 wasmtime bin/command-component.wasm
-wasmtime bin/bycargocommand.wasm
+wasmtime bin/bycargocommand.wasm 
 ```
+
+To serve the server handler built by `bycargoserver`, run:
+```
+wasmtime serve bin/bycargoserver.wasm
+```
+If you access `localhost:8080/good` you should see a 200-level response code in the browser dev tools `Network` tab
+Meanwhile if you access `localhost:8080/bad` , you should get a 500-level response code.
 
 Note: The reactor-component cannot be run via `wasmtime bin/reactor-component.wasm` since it expects a `run` to be exported, similarly, `wasmtime bin/bycargoreactor.wasm` does not work either
 
