@@ -22,7 +22,7 @@ world example {
 }
 ```
 
-And change the contents of `library1/wit/world.wit` to: # TODO
+And change the contents of `library1/wit/world.wit` to:
 ```
 package component:library1;
 
