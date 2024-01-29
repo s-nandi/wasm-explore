@@ -1,5 +1,9 @@
 void workflow();
 
-int main() {
+extern "C" void run() {
     workflow();
+}
+
+int main() {
+    run();
 }
