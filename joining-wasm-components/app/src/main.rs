@@ -1,5 +1,8 @@
 mod bindings;
 
+use bindings::hello_world;
+
 fn main() {
-    println!("Hello, world!");
+    println!("In main");
+    hello_world();
 }
