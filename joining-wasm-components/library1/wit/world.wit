@@ -1,7 +1,12 @@
 package component:library1;
 
 interface greeter {
-    hello-world: func() -> string;
+    record greeting {
+        text: string,
+        times: list<u32>,
+    }
+
+    hello-world: func() -> greeting;
 }
 
 /// An example world for the component to target.

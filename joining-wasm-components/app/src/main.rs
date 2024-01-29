@@ -1,8 +1,9 @@
 mod bindings;
 
-use crate::bindings::component::library1::greeter::hello_world;
+use crate::bindings::component::library1::greeter::{hello_world, Greeting};
 
 fn main() {
     println!("In main");
-    println!("{}", hello_world());
+    let Greeting { text, times } = hello_world();
+    println!("{} @ {:?}", text, times);
 }
