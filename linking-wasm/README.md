@@ -4,8 +4,7 @@ First cd into this folder from the project root: `cd linking-wasm`
 Run
 ```
 make
-cd bin
-node app.js
+node bin/dynamic.js
 ```
 
 Note: Dynamic linking does not play well with WASI (ie. standalone exceution, such as via Wasmer) currently
