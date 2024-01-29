@@ -61,7 +61,7 @@ Test different ways of adapting plain wasm modules into components
 
 Details at [WASM Components](./wasm-components/README.md)
 
-## Joining Wasm Components (Wasmtime, Rust, Cargo Component)
+## Joining Wasm Components (Wasmtime, Rust, Cargo Component, Componentize Py)
 
 Test different ways of joining wasm components
 
