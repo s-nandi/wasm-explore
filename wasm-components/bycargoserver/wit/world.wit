@@ -1,0 +1,7 @@
+package bycargoserver:root;
+
+world command {
+  include wasi:cli/imports@0.2.0;
+
+  export wasi:cli/run@0.2.0;
+}

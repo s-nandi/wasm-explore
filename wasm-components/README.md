@@ -9,6 +9,7 @@ Generate wasm modules/components and check component dependencies:
 make
 wasm-tools component wit bin/command-component.wasm  # you should see wasi:cli/run exported
 wasm-tools component wit bin/reactor-component.wasm # nothing exported, reactors are leaf nodes
+wasm-tools component wit bin/bycargoserver.wasm
 ```
 
 Run:
@@ -23,6 +24,29 @@ wasmtime bin/bycargocommand.wasm
 ```
 
 Note: The reactor-component cannot be run via `wasmtime bin/reactor-component.wasm` since it expects a `run` to be exported, similarly, `wasmtime bin/bycargoreactor.wasm` does not work either
+
+## Setting up local WASI package dependencies:
+
+According to this zulip [comment](https://bytecodealliance.zulipchat.com/#narrow/stream/407292-cargo-component/topic/Moving.20to.20cargo-component.20from.20wit-bindgen/near/413040499), the preview registry wouldn't work, so this is the process for getting wit dependencies locally:
+
+This repo is very helpful as well: [wasi-http-test](https://github.com/landonxjames/wasi-http-test/tree/main)
+
+1. Download the `wit` folder from the [wasi-http](https://github.com/WebAssembly/wasi-http) repo, and place it in `./wit/deps`
+1. Restructure `./wit/deps` so that `wasi-http`'s dependencies are pulled up into `./wit/deps` (instead of `./wit/deps/deps`) and move the remaining `wasi-http` .wit's into their own `./wit/deps/http` folder
+1. Copy-paste all of the http dependency `.wit`'s (ie. `./deps/http/handler.wit`, and `./deps/types.wit`) to the top of `./deps/http/proxy.wit` (but below the `package wasi:http@0.2.0;`)
+1. Add `path = "wit/world.wit"` to the `[package.metadata.component.target]` section of `Cargo.toml`
+<!-- 1. Add `package wasi:http@0.2.0;` to the top of each http dependency .wit (ie. `./deps/http/handler.wit` and `./deps/types.wit`)
+1. Update any imports internal to wasi-http, for example, Replace `import outgoing-handler` with `import wasi:http/outgoing-handler@0.2.0;` -->
+1. Run:
+```
+cargo component add --target --path wit/deps/cli wasi:cli
+cargo component add --target --path wit/deps/clocks wasi:clocks
+cargo component add --target --path wit/deps/filesystem wasi:filesystem
+cargo component add --target --path wit/deps/http wasi:http
+cargo component add --target --path wit/deps/io wasi:io
+cargo component add --target --path wit/deps/random wasi:random
+cargo component add --target --path wit/deps/sockets wasi:sockets
+```
 
 ## Adaptors Source
 The adaptors in the `adaptors` folder come from here: https://github.com/bytecodealliance/wasmtime/releases/tag/dev
