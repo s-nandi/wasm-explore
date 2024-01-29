@@ -6,6 +6,13 @@ Inspired by the example of writing a custom library-style component and consumin
 
 ## Pre-setup (if making for scratch, already checked in here)
 
+### Python
+Run:
+```
+make library2_bindings
+```
+
+### Rust
 Run:
 ```
 cargo component new library1 --lib
@@ -115,6 +122,6 @@ wasmtime bin/composed.wasm
 Not only does this work, you should also see:
 ```
 In main
-Hello, World!
+Hello, World! ...
 ```
 which shows the `hello-world` function exported by `library1` getting used in `app`!

@@ -1,0 +1,10 @@
+package component:library2;
+
+interface generator {
+    generate: func() -> s32;
+    generate-many: func() -> list<s32>;
+}
+
+world generatorworld {
+    export generator;
+}
