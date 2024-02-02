@@ -66,3 +66,9 @@ Details at [WASM Components](./wasm-components/README.md)
 Test different ways of joining wasm components
 
 Details at [Joining WASM Components](./joining-wasm-components/README.md)
+
+## Wasm Filesystem (Wasmtime, Cargo Component)
+
+Test how accessing the file system works
+
+Details at [Wasm Filesystem](./wasm-filesystem/README.md)
