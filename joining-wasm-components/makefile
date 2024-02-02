@@ -1,7 +1,11 @@
 all: bin/library1.wasm bin/app.wasm bin/composed.wasm bin/library2.wasm
 
-bin/composed.wasm: bin/library1.wasm bin/app.wasm bin/library2.wasm
-	wasm-tools compose bin/app.wasm -d bin/library1.wasm -d bin/library2.wasm -o $@
+bin/composed.wasm: bin/library1.wasm bin/app.wasm bin/library2.wasm bin/library3.wasm
+	wasm-tools compose bin/app.wasm -d bin/library1.wasm -d bin/library2.wasm -d bin/library3.wasm -o $@
+
+bin/library3.wasm: library3/src/*.js library3/wit/*.wit
+# remove the --enable-stdout if you want to target wasm32-unknown-unknown instead of wasm32-wasi
+	cd library3; jco componentize src/*.js -w wit -n library3 --enable-stdout -o ../$@
 
 bin/library1.wasm: library1/src/*.rs library1/wit/*.wit
 	cargo component build --target wasm32-unknown-unknown --manifest-path="library1/Cargo.toml"

@@ -3,4 +3,5 @@ package component:app;
 world example {
     import component:library1/greeter;
     import component:library2/generator;
+    import component:library3/numeric;
 }

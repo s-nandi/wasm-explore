@@ -1,0 +1,9 @@
+package component:library3;
+
+interface numeric {
+    add: func(a: s32, b: s32) -> s32;
+}
+
+world library3 {
+    export numeric;
+}

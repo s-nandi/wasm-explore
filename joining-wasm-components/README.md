@@ -4,6 +4,8 @@ The wasm-components dir is a pre-requisite for this (conceptually, not with resp
 
 Inspired by the example of writing a custom library-style component and consuming it in a command-style component, in the webassembly component model introduction's section on [Running Components](https://component-model.bytecodealliance.org/creating-and-consuming/running.html#running-components-with-custom-exports). The [Composing Components](https://component-model.bytecodealliance.org/creating-and-consuming/composing.html) section of the same documentation is also helpful to see how multiple dependencies could be chained together (if you don't want to use [wasmbuilder.app](https://wasmbuilder.app/)).
 
+This componentize-js [test](https://github.com/bytecodealliance/ComponentizeJS/blob/main/test/test.js) (specifically the 'basic app' test) is a good example of how to import dependencies in jco-built components, along with how to set up the exports
+
 ## Pre-setup (if making for scratch, already checked in here)
 
 ### Python
