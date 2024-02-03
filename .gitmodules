@@ -1,0 +1,3 @@
+[submodule "wasm-network/WASI-Virt"]
+	path = wasm-network/WASI-Virt
+	url = https://github.com/bytecodealliance/WASI-Virt.git

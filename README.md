@@ -72,3 +72,9 @@ Details at [Joining WASM Components](./joining-wasm-components/README.md)
 Test how accessing the file system works
 
 Details at [Wasm Filesystem](./wasm-filesystem/README.md)
+
+## Wasm Network (Wasmtime, Cargo Component)
+
+Test how making network calls works
+
+Details at [Wasm Network](./wasm-network/README.md)
