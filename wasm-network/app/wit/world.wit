@@ -1,0 +1,6 @@
+package component:app;
+
+world app {
+    include component:host/imports;
+    export run: func(uri: string, filename: string);
+}

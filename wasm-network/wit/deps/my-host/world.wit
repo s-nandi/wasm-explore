@@ -1,0 +1,9 @@
+package component:host;
+
+interface network-provider {
+    get: func(uri: string, filename: string);
+}
+
+world imports {
+    import network-provider;
+}

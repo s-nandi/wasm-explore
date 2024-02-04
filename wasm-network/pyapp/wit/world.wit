@@ -1,4 +1,0 @@
-package example:hello;
-world bindings {
-    include wasi:cli/command@0.2.0;
-}
