@@ -77,4 +77,6 @@ Details at [Wasm Filesystem](./wasm-filesystem/README.md)
 
 Test how making network calls works
 
+Showcases how to make a python host to provide network utilities since WASI-Virt currently uses a different (older) version of WASI components compared to what `cargo component` generates with. The port is non-trivial since various functions/types have moved around in `WASI` between the versions.
+
 Details at [Wasm Network](./wasm-network/README.md)
