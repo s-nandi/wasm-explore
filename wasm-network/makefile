@@ -19,3 +19,4 @@ clean:
 	rm -rf app/target/*
 	rm -rf bin
 	rm -rf hostbindings
+	rm -rf output/*
