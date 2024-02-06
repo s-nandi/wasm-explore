@@ -6,9 +6,6 @@ all: bin/app.wasm bindings
 bindings: bin/app.wasm
 	python3 -m wasmtime.bindgen $< --out-dir hostbindings
 
-bin/adapted.wasm: bin/app.wasm
-	wasm-tools component new $< -o $@
-
 bin/app.wasm: app/src/*.rs
 	cargo component build --target $(TARGET) --manifest-path="app/Cargo.toml"
 	mkdir -p bin
