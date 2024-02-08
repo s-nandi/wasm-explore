@@ -17,3 +17,5 @@ clean:
 	rm -rf bin
 	rm -rf hostbindings
 	rm -rf output/*
+	rm -rf app2/target/*
+	rm -rf hostrs/target/*
