@@ -1,0 +1,9 @@
+package component:dep;
+
+interface dep {
+    myimport: func() -> string;
+}
+
+world w {
+    import dep;
+}

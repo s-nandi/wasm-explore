@@ -15,3 +15,8 @@ crate-type = ["cdylib"]
 package = "component:app2"
 
 [package.metadata.component.dependencies]
+
+[package.metadata.component.target]
+
+[package.metadata.component.target.dependencies]
+"component:dep" = { path = "./wit/deps/dep.wit" }

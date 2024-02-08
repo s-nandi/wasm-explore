@@ -3,6 +3,14 @@ name = "hostrs"
 version = "0.1.0"
 edition = "2021"
 
+[[bin]]
+name = "using_app2"
+path = "src_using_app2/main.rs"
+
+[[bin]]
+name = "self_contained"
+path = "src/main.rs"
+
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
