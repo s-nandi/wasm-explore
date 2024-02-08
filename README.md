@@ -79,4 +79,9 @@ Test how making network calls works
 
 Showcases how to make a python host to provide network utilities since WASI-Virt currently uses a different (older) version of WASI components compared to what `cargo component` generates with. The port is non-trivial since various functions/types have moved around in `WASI` between the versions.
 
+Also gives a self-contained example of a rust host that interfaces with various external WASM files:
+- a wasi cli command
+- a custom library with just 1 export
+- a custom library with 1 export and the standard WASI cli command imports (but no WASI exports -- ie. no run)
+
 Details at [Wasm Network](./wasm-network/README.md)
