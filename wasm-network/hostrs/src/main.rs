@@ -70,6 +70,7 @@ fn main() -> Result<()> {
         println!();
         // Moving this outside the loop doesn't work before it leads to multiple-definition errors
         let mut linker = Linker::new(&engine);
+        linker.allow_shadowing(false);
 
         println!("Run run_custom_function = {run_custom_function} use_file_with_wasi_imports = {use_file_with_wasi_imports}");
         let file = match (run_custom_function, use_file_with_wasi_imports) {
@@ -89,8 +90,28 @@ fn main() -> Result<()> {
             command::sync::add_to_linker(&mut linker).context("Failed to link command world")?;
         }
 
+        if !run_custom_function {
+            // panic!();
+            let mut instance = linker
+                .instance("wasi:cli@0.2.0/run")
+                .context("getting the wasi instance")?;
+            instance
+                .func_wrap("run", |mut _ctx, ()| {
+                    panic!();
+                    println!("called from the host wrapper");
+                    Ok(())
+                })
+                .context("Failed to override run")?;
+        }
+
         let res: Box<dyn std::fmt::Debug>;
         if run_custom_function {
+            {
+                let instance = linker
+                    .instance("root:component/root")
+                    .context("Get root instance")?;
+            }
+
             let instance = linker
                 .instantiate(&mut store, &component)
                 .expect("Failed to instantiate component");
