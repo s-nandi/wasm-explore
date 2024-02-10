@@ -1,0 +1,13 @@
+package component:dependency;
+
+interface imports {
+    resource blob {
+        name: func() -> string;
+    }
+
+    myimport: func() -> blob;
+}
+
+world mydep {
+    import imports;
+}

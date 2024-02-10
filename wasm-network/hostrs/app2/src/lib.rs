@@ -1,15 +1,16 @@
 mod bindings;
 
-use crate::bindings::component::dep::dep::myimport;
+use crate::bindings::component::dependency::imports::myimport;
 use bindings::Guest;
 
 struct Component;
 
 impl Guest for Component {
-    /// Say hello!
     fn hello_world() -> String {
         let v = myimport();
+        let name = v.name();
+        println!("Hello world side effect");
 
-        format!("Hello world with import ({v})")
+        format!("Hello world with import ({name})")
     }
 }

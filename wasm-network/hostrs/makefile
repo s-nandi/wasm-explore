@@ -1,4 +1,4 @@
-TARGET=wasm32-unknown-unknown
+TARGET=wasm32-wasi
 
 all: src
 
@@ -10,5 +10,6 @@ hello_world_export_wasi_and_myimport_imports.wasm:
 
 clean:
 	rm -rf app2/target
+	rm -f app2/src/bindings.rs
 	rm -rf target
-	rm hello_world_export_wasi_and_myimport_imports.wasm
+	rm -f hello_world_export_wasi_and_myimport_imports.wasm

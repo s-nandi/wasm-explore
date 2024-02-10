@@ -19,4 +19,4 @@ package = "component:app2"
 [package.metadata.component.target]
 
 [package.metadata.component.target.dependencies]
-"component:dep" = { path = "./wit/deps/dep.wit" }
+"component:dep" = { path = "./wit/deps/component-mydep/mydep.wit" }

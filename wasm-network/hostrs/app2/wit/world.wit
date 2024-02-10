@@ -2,6 +2,6 @@ package component:app2;
 
 /// An example world for the component to target.
 world example {
-    include component:dep/w;
+    include component:dependency/mydep;
     export hello-world: func() -> string;
 }

@@ -56,40 +56,108 @@ use wit_bindgen::rt::{alloc, vec::Vec, string::String};
 struct _RetArea([u8; 8]);
 static mut _RET_AREA: _RetArea = _RetArea([0; 8]);
 pub mod component {
-  pub mod dep {
+  pub mod dependency {
     
     #[allow(clippy::all)]
-    pub mod dep {
+    pub mod imports {
       #[used]
       #[doc(hidden)]
       #[cfg(target_arch = "wasm32")]
       static __FORCE_SECTION_REF: fn() = super::super::super::__link_section;
+      
+      #[derive(Debug)]
+      #[repr(transparent)]
+      pub struct Blob{
+        handle: wit_bindgen::rt::Resource<Blob>,
+      }
+      
+      impl Blob{
+        #[doc(hidden)]
+        pub unsafe fn from_handle(handle: u32) -> Self {
+          Self {
+            handle: wit_bindgen::rt::Resource::from_handle(handle),
+          }
+        }
+        
+        #[doc(hidden)]
+        pub fn into_handle(self) -> u32 {
+          wit_bindgen::rt::Resource::into_handle(self.handle)
+        }
+        
+        #[doc(hidden)]
+        pub fn handle(&self) -> u32 {
+          wit_bindgen::rt::Resource::handle(&self.handle)
+        }
+      }
+      
+      
+      unsafe impl wit_bindgen::rt::WasmResource for Blob{
+        #[inline]
+        unsafe fn drop(_handle: u32) {
+          #[cfg(not(target_arch = "wasm32"))]
+          unreachable!();
+          
+          #[cfg(target_arch = "wasm32")]
+          {
+            #[link(wasm_import_module = "component:dependency/imports")]
+            extern "C" {
+              #[link_name = "[resource-drop]blob"]
+              fn drop(_: u32);
+            }
+            
+            drop(_handle);
+          }
+        }
+      }
+      
+      impl Blob {
+        #[allow(unused_unsafe, clippy::all)]
+        pub fn name(&self,) -> wit_bindgen::rt::string::String{
+          
+          #[allow(unused_imports)]
+          use wit_bindgen::rt::{alloc, vec::Vec, string::String};
+          unsafe {
+            
+            #[repr(align(4))]
+            struct RetArea([u8; 8]);
+            let mut ret_area = ::core::mem::MaybeUninit::<RetArea>::uninit();
+            let ptr0 = ret_area.as_mut_ptr() as i32;
+            #[cfg(target_arch = "wasm32")]
+            #[link(wasm_import_module = "component:dependency/imports")]
+            extern "C" {
+              #[link_name = "[method]blob.name"]
+              fn wit_import(_: i32, _: i32, );
+            }
+            
+            #[cfg(not(target_arch = "wasm32"))]
+            fn wit_import(_: i32, _: i32, ){ unreachable!() }
+            wit_import((self).handle() as i32, ptr0);
+            let l1 = *((ptr0 + 0) as *const i32);
+            let l2 = *((ptr0 + 4) as *const i32);
+            let len3 = l2 as usize;
+            let bytes3 = Vec::from_raw_parts(l1 as *mut _, len3, len3);
+            wit_bindgen::rt::string_lift(bytes3)
+          }
+        }
+      }
       #[allow(unused_unsafe, clippy::all)]
-      pub fn myimport() -> wit_bindgen::rt::string::String{
+      pub fn myimport() -> Blob{
         
         #[allow(unused_imports)]
         use wit_bindgen::rt::{alloc, vec::Vec, string::String};
         unsafe {
           
-          #[repr(align(4))]
-          struct RetArea([u8; 8]);
-          let mut ret_area = ::core::mem::MaybeUninit::<RetArea>::uninit();
-          let ptr0 = ret_area.as_mut_ptr() as i32;
           #[cfg(target_arch = "wasm32")]
-          #[link(wasm_import_module = "component:dep/dep")]
+          #[link(wasm_import_module = "component:dependency/imports")]
           extern "C" {
             #[link_name = "myimport"]
-            fn wit_import(_: i32, );
+            fn wit_import() -> i32;
           }
           
           #[cfg(not(target_arch = "wasm32"))]
-          fn wit_import(_: i32, ){ unreachable!() }
-          wit_import(ptr0);
-          let l1 = *((ptr0 + 0) as *const i32);
-          let l2 = *((ptr0 + 4) as *const i32);
-          let len3 = l2 as usize;
-          let bytes3 = Vec::from_raw_parts(l1 as *mut _, len3, len3);
-          wit_bindgen::rt::string_lift(bytes3)
+          fn wit_import() -> i32{ unreachable!() }
+          let ret = wit_import();
+          Blob::from_handle(ret as u32)
         }
       }
       
@@ -101,7 +169,7 @@ pub mod component {
 #[cfg(target_arch = "wasm32")]
 #[link_section = "component-type:example"]
 #[doc(hidden)]
-pub static __WIT_BINDGEN_COMPONENT_TYPE: [u8; 299] = [3, 0, 7, 101, 120, 97, 109, 112, 108, 101, 0, 97, 115, 109, 13, 0, 1, 0, 7, 97, 1, 65, 2, 1, 65, 4, 1, 66, 2, 1, 64, 0, 0, 115, 4, 0, 8, 109, 121, 105, 109, 112, 111, 114, 116, 1, 0, 3, 1, 17, 99, 111, 109, 112, 111, 110, 101, 110, 116, 58, 100, 101, 112, 47, 100, 101, 112, 5, 0, 1, 64, 0, 0, 115, 4, 0, 11, 104, 101, 108, 108, 111, 45, 119, 111, 114, 108, 100, 1, 1, 4, 1, 22, 99, 111, 109, 112, 111, 110, 101, 110, 116, 58, 97, 112, 112, 50, 47, 101, 120, 97, 109, 112, 108, 101, 4, 0, 11, 13, 1, 0, 7, 101, 120, 97, 109, 112, 108, 101, 3, 0, 0, 0, 93, 12, 112, 97, 99, 107, 97, 103, 101, 45, 100, 111, 99, 115, 0, 123, 34, 119, 111, 114, 108, 100, 115, 34, 58, 123, 34, 101, 120, 97, 109, 112, 108, 101, 34, 58, 123, 34, 100, 111, 99, 115, 34, 58, 34, 65, 110, 32, 101, 120, 97, 109, 112, 108, 101, 32, 119, 111, 114, 108, 100, 32, 102, 111, 114, 32, 116, 104, 101, 32, 99, 111, 109, 112, 111, 110, 101, 110, 116, 32, 116, 111, 32, 116, 97, 114, 103, 101, 116, 46, 34, 125, 125, 125, 0, 70, 9, 112, 114, 111, 100, 117, 99, 101, 114, 115, 1, 12, 112, 114, 111, 99, 101, 115, 115, 101, 100, 45, 98, 121, 2, 13, 119, 105, 116, 45, 99, 111, 109, 112, 111, 110, 101, 110, 116, 6, 48, 46, 49, 56, 46, 50, 16, 119, 105, 116, 45, 98, 105, 110, 100, 103, 101, 110, 45, 114, 117, 115, 116, 6, 48, 46, 49, 54, 46, 48];
+pub static __WIT_BINDGEN_COMPONENT_TYPE: [u8; 359] = [3, 0, 7, 101, 120, 97, 109, 112, 108, 101, 0, 97, 115, 109, 13, 0, 1, 0, 7, 156, 1, 1, 65, 2, 1, 65, 4, 1, 66, 7, 4, 0, 4, 98, 108, 111, 98, 3, 1, 1, 104, 0, 1, 64, 1, 4, 115, 101, 108, 102, 1, 0, 115, 4, 0, 17, 91, 109, 101, 116, 104, 111, 100, 93, 98, 108, 111, 98, 46, 110, 97, 109, 101, 1, 2, 1, 105, 0, 1, 64, 0, 0, 3, 4, 0, 8, 109, 121, 105, 109, 112, 111, 114, 116, 1, 4, 3, 1, 28, 99, 111, 109, 112, 111, 110, 101, 110, 116, 58, 100, 101, 112, 101, 110, 100, 101, 110, 99, 121, 47, 105, 109, 112, 111, 114, 116, 115, 5, 0, 1, 64, 0, 0, 115, 4, 0, 11, 104, 101, 108, 108, 111, 45, 119, 111, 114, 108, 100, 1, 1, 4, 1, 22, 99, 111, 109, 112, 111, 110, 101, 110, 116, 58, 97, 112, 112, 50, 47, 101, 120, 97, 109, 112, 108, 101, 4, 0, 11, 13, 1, 0, 7, 101, 120, 97, 109, 112, 108, 101, 3, 0, 0, 0, 93, 12, 112, 97, 99, 107, 97, 103, 101, 45, 100, 111, 99, 115, 0, 123, 34, 119, 111, 114, 108, 100, 115, 34, 58, 123, 34, 101, 120, 97, 109, 112, 108, 101, 34, 58, 123, 34, 100, 111, 99, 115, 34, 58, 34, 65, 110, 32, 101, 120, 97, 109, 112, 108, 101, 32, 119, 111, 114, 108, 100, 32, 102, 111, 114, 32, 116, 104, 101, 32, 99, 111, 109, 112, 111, 110, 101, 110, 116, 32, 116, 111, 32, 116, 97, 114, 103, 101, 116, 46, 34, 125, 125, 125, 0, 70, 9, 112, 114, 111, 100, 117, 99, 101, 114, 115, 1, 12, 112, 114, 111, 99, 101, 115, 115, 101, 100, 45, 98, 121, 2, 13, 119, 105, 116, 45, 99, 111, 109, 112, 111, 110, 101, 110, 116, 6, 48, 46, 49, 56, 46, 50, 16, 119, 105, 116, 45, 98, 105, 110, 100, 103, 101, 110, 45, 114, 117, 115, 116, 6, 48, 46, 49, 54, 46, 48];
 
 #[inline(never)]
 #[doc(hidden)]

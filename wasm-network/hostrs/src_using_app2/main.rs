@@ -1,11 +1,24 @@
-use anyhow::Result;
-use wasmtime::component::{Component, Linker};
+use std::collections::HashMap;
+
+use anyhow::{Context, Result};
+use wasmtime::component::{Component, Linker, Resource};
 use wasmtime::{Config, Engine, Store};
-use wasmtime_wasi::preview2::{ResourceTable, WasiCtx, WasiCtxBuilder, WasiView};
+use wasmtime_wasi::preview2::{command, ResourceTable, WasiCtx, WasiCtxBuilder, WasiView};
+
+wasmtime::component::bindgen!({
+    path: "app2/wit",
+});
+
+use component::dependency::imports;
+
+struct MyBlob {
+    name: String,
+}
 
 struct WasiHostCtx {
     ctx: WasiCtx,
     table: wasmtime::component::ResourceTable,
+    state: HashMap<u32, MyBlob>,
 }
 
 impl WasiHostCtx {
@@ -16,6 +29,7 @@ impl WasiHostCtx {
                 .inherit_stdio()
                 .build(),
             table: ResourceTable::new(),
+            state: HashMap::new(),
         }
     }
 }
@@ -54,6 +68,35 @@ fn check_resources_required(component: &Component) {
     println!("# requirements = {num_requirements:?}");
 }
 
+impl imports::Host for WasiHostCtx {
+    fn myimport(&mut self) -> wasmtime::Result<Resource<imports::Blob>> {
+        let table = &mut self.state;
+        let id = 0;
+        if !table.contains_key(&id) {
+            let new_blob = MyBlob {
+                name: "foo".to_owned(),
+            };
+            table.insert(id, new_blob);
+        };
+        return Ok(Resource::new_own(id));
+    }
+}
+
+impl imports::HostBlob for WasiHostCtx {
+    fn name(&mut self, self_: Resource<imports::Blob>) -> wasmtime::Result<String> {
+        let id = self_.rep();
+        let state = &self.state[&id];
+        let name = state.name.clone();
+        Ok(name)
+    }
+
+    fn drop(&mut self, rep: Resource<imports::Blob>) -> wasmtime::Result<()> {
+        let id = rep.rep();
+        self.state.remove(&id);
+        Ok(())
+    }
+}
+
 fn main() -> Result<()> {
     println!("Starting");
     let mut config = Config::default();
@@ -64,32 +107,18 @@ fn main() -> Result<()> {
     let wasi_view = WasiHostCtx::new();
     let mut store = Store::new(&engine, wasi_view);
 
-    println!();
-    // Moving this outside the loop doesn't work before it leads to multiple-definition errors
     let mut linker = Linker::new(&engine);
     linker.allow_shadowing(false);
 
-    // let file = "hello_world_export.wasm";
-    let file = "hello_world_export_wasi_and_myimport_imports.wasm";
+    Example::add_to_linker(&mut linker, |state: &mut WasiHostCtx| state)?;
 
+    let file = "hello_world_export_wasi_and_myimport_imports.wasm";
     let component = load_file(&engine, file);
 
-    let res: Box<dyn std::fmt::Debug>;
-    let mut root = linker.instance("component:dep/dep")?;
-    root.func_wrap("myimport", |_wasi_view, _: ()| {
-        Ok(("imported string into interface",))
-    })?;
+    command::sync::add_to_linker(&mut linker).context("Failed to link command world")?;
 
-    let instance = linker
-        .instantiate(&mut store, &component)
-        .expect("Failed to instantiate component");
-
-    let func = instance
-        .get_typed_func::<(), (String,)>(&mut store, "hello-world")
-        .expect("Could not load valid function instance");
-    let val = func.call(&mut store, ())?;
-    res = Box::new(val);
-
+    let (bindings, _) = Example::instantiate(&mut store, &component, &linker)?;
+    let res = bindings.call_hello_world(&mut store);
     println!("Result: {res:?}");
 
     Ok(())
