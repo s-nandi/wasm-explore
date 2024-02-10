@@ -147,9 +147,12 @@ which should show:
 package root:component;
 
 world root {
-  import component:dep/dep;
+  import component:dependency/imports;
 
   export hello-world: func() -> string;
+
+  import wasi:...
+  ...
 }
 ```
 
@@ -166,9 +169,10 @@ Starting
 Loading hello_world_export_wasi_and_myimport_imports.wasm
 Done loading hello_world_export_wasi_and_myimport_imports.wasm
 # requirements = 2
-Result: ("Hello world with import (imported string into interface)",)
+Hello world side effect
+Result: Ok("Hello world with import (foo)")
 ```
-where the `imported string into interface` part of the result comes from `app2`
+where the `foo` part of the result comes from `src_using_app2` and the `Hello world with import` part comes from `app2`
 
 
 Clean with:
